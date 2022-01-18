@@ -1,0 +1,43 @@
+type User @model 
+@auth(rules: [{ allow: public }])
+{
+  id: ID!
+  username: String
+  password: String  
+  phoneNumber: String  
+  email: String  
+  name: String
+  icon: String
+  diet: String
+  status: String
+}
+
+type Serving @model 
+@auth(rules: [{ allow: public }])
+{
+  id: ID!
+  userId: String
+  color: String
+  datetime: String
+  add: Boolean
+}
+
+type Ingredient @model 
+@auth(rules: [{ allow: public }])
+{
+  id: ID!
+  name: String
+  color: String  
+  type: String
+  imageUri: String
+}
+
+type Reason @model 
+@auth(rules: [{ allow: public }])
+{
+  id: ID!
+  ingredient: String
+  color: String  
+  title: String
+  text: String
+}

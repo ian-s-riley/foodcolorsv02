@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-foodcolorsv02-dev-195249-authRole",
+      "UnauthRoleArn": "arn:aws:iam::059437111214:role/amplify-foodcolorsv02-dev-195249-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::059437111214:role/amplify-foodcolorsv02-dev-195249-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-foodcolorsv02-dev-195249-deployment",
+      "UnauthRoleName": "amplify-foodcolorsv02-dev-195249-unauthRole",
+      "StackName": "amplify-foodcolorsv02-dev-195249",
+      "StackId": "arn:aws:cloudformation:us-east-1:059437111214:stack/amplify-foodcolorsv02-dev-195249/ba2a0ec0-7809-11ec-9aec-0a00870f69e3",
+      "AmplifyAppId": "d3nok73ah5o4br"
+    },
+    "categories": {
+      "auth": {
+        "foodcolorsv02": {}
+      }
+    }
+  }
+}
