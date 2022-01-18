@@ -1,71 +1,67 @@
-import React from "react";
-import {
-  Text,
-  Link,
-  HStack,
-  Center,
-  Heading,
-  Switch,
-  useColorMode,
-  NativeBaseProvider,
-  extendTheme,
-  VStack,
-  Code,
-} from "native-base";
-import NativeBaseIcon from "./components/NativeBaseIcon";
+import React, { useState, useEffect } from 'react';
 
-// Define the config
-const config = {
-  useSystemColorMode: false,
-  initialColorMode: "dark",
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ActivityIndicator } from 'react-native';
+
+import {
+  NativeBaseProvider,
+  View,
+} from 'native-base';
+
+//screens for un-authed users
+import Welcome from './src/Welcome';
+
+//screens for auth users
+import Home from './src/Home';
+
+import Amplify from 'aws-amplify'
+import awsconfig from './src/aws-exports'
+Amplify.configure(awsconfig)
+
+const AuthStack = createNativeStackNavigator();
+const AppStack = createNativeStackNavigator();
+
+const Initializing = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" color="skyblue" />
+    </View>
+  );
 };
 
-// extend the theme
-export const theme = extendTheme({ config });
-
-export default function App() {
+function MyAuthStack() {
   return (
-    <NativeBaseProvider>
-      <Center
-        _dark={{ bg: "blueGray.900" }}
-        _light={{ bg: "blueGray.50" }}
-        px={4}
-        flex={1}
-      >
-        <VStack space={5} alignItems="center">
-          <NativeBaseIcon />
-          <Heading size="lg">Welcome to NativeBase</Heading>
-          <HStack space={2} alignItems="center">
-            <Text>Edit</Text>
-            <Code>App.js</Code>
-            <Text>and save to reload.</Text>
-          </HStack>
-          <Link href="https://docs.nativebase.io" isExternal>
-            <Text color="primary.500" underline fontSize={"xl"}>
-              Learn NativeBase
-            </Text>
-          </Link>
-          <ToggleDarkMode />
-        </VStack>
-      </Center>
-    </NativeBaseProvider>
+    <AuthStack.Navigator>
+      <AuthStack.Screen name="Home" component={Welcome} />
+    </AuthStack.Navigator>
   );
 }
 
-// Color Switch Component
-function ToggleDarkMode() {
-  const { colorMode, toggleColorMode } = useColorMode();
+function MyAppStack() {
   return (
-    <HStack space={2} alignItems="center">
-      <Text>Dark</Text>
-      <Switch
-        isChecked={colorMode === "light" ? true : false}
-        onToggle={toggleColorMode}
-        aria-label={
-          colorMode === "light" ? "switch to dark mode" : "switch to light mode"
-        }
-      />
-      <Text>Light</Text>
-    </HStack>
+    <AppStack.Navigator>
+      <AppStack.Screen name="Home">{Home}</AppStack.Screen>
+    </AppStack.Navigator>
   );
 }
+
+function App() {
+  const [isUserLoggedIn, setUserLoggedIn] = useState('initializing');
+
+  return (
+    <NavigationContainer>
+      <NativeBaseProvider>
+        {isUserLoggedIn === 'initializing' && <Initializing />}
+        {isUserLoggedIn === 'loggedIn' && (
+          <MyAppStack />
+        )}
+        {isUserLoggedIn === 'loggedOut' && (
+          <MyAuthStack />
+        )}
+      </NativeBaseProvider>
+    </NavigationContainer>
+  );
+}
+
+export default App
