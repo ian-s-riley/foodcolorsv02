@@ -137,7 +137,11 @@ function Joke() {
           </Center>
         </Pressable>
       </HStack>
+
+
+
     </NativeBaseProvider>
+
   );
 }
 

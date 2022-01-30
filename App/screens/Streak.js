@@ -6,7 +6,7 @@ import { useDispatch, connect } from 'react-redux'
 import { API, graphqlOperation } from 'aws-amplify';
 import {
   listServings,
-} from '../src/graphql/queries';
+} from '../graphql/queries';
 
 import {
   Box,
@@ -82,7 +82,7 @@ function Streak(props) {
           setServings(response.data.listServings.items)
           setLoading(false)
         },
-        error => console.log('Load User Servings Error: ', error)
+        error => console.log('Load User Servings Error', error)
       )
   }
 

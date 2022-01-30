@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
 import { useDispatch, connect } from 'react-redux'
-import { addServingAsync, deleteServingAsync, updateColors, updateServings } from '../src/features/user/userSlice'
+import { addServingAsync, deleteServingAsync, updateColors, updateServings } from '../features/user/userSlice'
 
 import {
   Box,
@@ -219,9 +219,9 @@ function Colors(props) {
     <NativeBaseProvider>
       <Center flex={1} p="2" w="100%" bgColor="gray.50">
 
-        <Box safeAreaTop
+        <Box
           borderColor="gray.200"
-          borderWidth="2"
+          borderWidth="1"
           width="98%"
           rounded="xl"
           alignItems="center"
@@ -347,6 +347,7 @@ function Colors(props) {
                   rounded="xl"
                   borderWidth="1"
                   borderColor="coolGray.200"
+                  bgColor={props.color + '.50'}
                   onPress={() => {
                     setShowInfo(!showInfo)
                     setShowIngredients(false)
@@ -382,6 +383,7 @@ function Colors(props) {
                   rounded="xl"
                   borderWidth="1"
                   borderColor="coolGray.200"
+                  bgColor={props.color + '.50'}
                   onPress={() => {
                     setShowIngredients(true)
                   }}
@@ -410,6 +412,7 @@ function Colors(props) {
                   rounded="xl"
                   borderWidth="1"
                   borderColor="coolGray.200"
+                  bgColor={props.color + '.50'}
                   onPress={() => {
                     setShowInfo(false)
                     setShowRecipes(!showRecipes)
@@ -441,45 +444,7 @@ function Colors(props) {
 
           </VStack>
         </Box>
-      </Center>
-      <HStack bg="gray.50" alignItems="center" safeAreaBottom shadow={6}>
-        <Pressable
-          opacity={.5}
-          py="3"
-          flex={1}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <MaterialCommunityIcons
-                  name={'home-outline'}
-                />
-              }
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-        <Pressable
-          opacity={0.5}
-          py="2"
-          flex={1}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={<MaterialCommunityIcons
-                name={'account'}
-              />}
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-      </HStack>
+      </Center>      
 
       <Modal isOpen={showInfo} onClose={() => setShowInfo(false)}>
         <Modal.Content>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 
 import { useDispatch, connect } from 'react-redux'
-import { updateUserAsync } from '../src/features/user/userSlice'
+import { updateUserAsync } from '../features/user/userSlice'
 
 import { Auth } from 'aws-amplify';
 
@@ -192,45 +192,7 @@ function Profile(props) {
             <Text fontSize={15} color="gray.400">Sign Out</Text>
           </Stagger>
         </Box>
-      </Center>
-
-      <HStack bg="gray.50" alignItems="center" safeAreaBottom shadow={6}>
-        <Pressable
-          opacity={.5}
-          py="3"
-          flex={1}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <MaterialCommunityIcons
-                  name={'home-outline'}
-                />
-              }
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-        <Pressable
-          opacity={1}
-          py="2"
-          flex={1}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={<MaterialCommunityIcons
-                name={'account'}
-              />}
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-      </HStack>
+      </Center>      
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">

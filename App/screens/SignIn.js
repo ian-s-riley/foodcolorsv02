@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 
 import { useDispatch, connect } from 'react-redux'
-import { addUserAsync, updateUserAsync } from '../src/features/user/userSlice'
+import { addUserAsync, updateUserAsync } from '../features/user/userSlice'
 
 //AWS Amplify GraphQL libraries
 import { API, graphqlOperation } from 'aws-amplify';
 import {
   listUsers,
-} from '../src/graphql/queries'
+} from '../graphql/queries'
 
 import uuid from 'react-native-uuid';
-//import InputMask from "react-input-mask";
 import {
   Box,
   Icon,
@@ -40,7 +38,6 @@ function mapStateToProps(state) {
 }
 
 function ProfileAuth(props) {
-  const navigation = useNavigation();
   const dispatch = useDispatch()
 
   const { isOpen, onToggle } = useDisclose(true)
@@ -74,7 +71,6 @@ function ProfileAuth(props) {
   async function signInAWSUser(username, password) {
     try {
       await Auth.signIn(username, password);
-      setErrorMsg('')
       //console.log('AWS Auth Success');
     } catch (error) {
       //console.log('AWS Auth Fail');
@@ -403,47 +399,7 @@ function ProfileAuth(props) {
             <Text fontSize={15} color="gray.400">Resend Code</Text>
           </Stagger>
         </Box>
-
-
-
       </Center>
-      <HStack bg="gray.50" alignItems="center" safeAreaBottom shadow={6}>
-        <Pressable
-          opacity={.5}
-          py="3"
-          flex={1}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <MaterialCommunityIcons
-                  name={'home-outline'}
-                />
-              }
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-        <Pressable
-          opacity={1}
-          py="2"
-          flex={1}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={<MaterialCommunityIcons
-                name={'account'}
-              />}
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-      </HStack>
 
       <Modal
         isOpen={showSignin || showSignup || showVerify || showNewCode || showNewCodeVerify}

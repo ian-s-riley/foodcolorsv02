@@ -37,8 +37,12 @@ export const userSlice = createSlice({
         servings: [],
     },
     reducers: {
+        updateStatus: (state, action) => {
+            //console.log('userSlice.js - updateUser - action.payload', action.payload)
+            state.status = action.payload.status
+        },
         updateUser: (state, action) => {
-            console.log('userSlice.js - updateUser - action.payload', action.payload)
+            //console.log('userSlice.js - updateUser - action.payload', action.payload)
             state.id = action.payload.id
             state.username = action.payload.username
             state.password = action.payload.password
@@ -73,10 +77,10 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateUser, updateCurrentDate, updateServings, updateColors } = userSlice.actions
+export const { updateStatus, updateUser, updateCurrentDate, updateServings, updateColors } = userSlice.actions
 
 export const getUserAsync = user => dispatch => {
-    console.log('getUserAsync - user', user)
+    //console.log('getUserAsync - user', user)
     API.graphql(
         graphqlOperation(listUsers, {
             filter: {
@@ -94,7 +98,7 @@ export const getUserAsync = user => dispatch => {
 };
 
 export const getServingsAsync = user => dispatch => {
-    console.log('getServingsAsync - user', user)
+    //console.log('getServingsAsync - user', user)
     API.graphql(
         graphqlOperation(listServings, {
             filter: {
@@ -119,7 +123,7 @@ export const getServingsAsync = user => dispatch => {
 };
 
 export const addServingAsync = user => dispatch => {
-    console.log('addServingAsync - user.newServing', user.newServing)
+    //console.log('addServingAsync - user.newServing', user.newServing)
 
     //save the serving to the DB for this user
     API.graphql(graphqlOperation(createServingMutation, { input: user.newServing }))

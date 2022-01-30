@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import {
   listReasons
-} from '../src/graphql/queries';
+} from '../graphql/queries';
 
 import {
   Box,

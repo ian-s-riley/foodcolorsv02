@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { useDispatch, connect } from 'react-redux'
-import { getUserAsync, getServingsAsync, updateCurrentDate } from '../src/features/user/userSlice'
+import { getUserAsync, getServingsAsync, updateCurrentDate } from '../features/user/userSlice'
 
 import moment from 'moment';
 
@@ -45,18 +45,18 @@ function Home(props) {
   )
   const [blueColor, setBlueColor] = useState("blue.50");
 
-  useEffect(() => {
-    fetchUser()
-  }, [props.user.username])
+  // useEffect(() => {
+  //   fetchUser()
+  // }, [props.user.username])
 
-  async function fetchUser() {
-    console.log('useEffect - fetchUser - props.user', props.user)
-    props.user.username !== "" && dispatch(getUserAsync(props.user))
-  }
+  // async function fetchUser() {
+  //   console.log('useEffect - fetchUser - props.user', props.user)
+  //   props.user.username !== "" && dispatch(getUserAsync(props.user))
+  // }
 
   useEffect(() => {
     fetchServings()
-  }, [props.user.id, props.user.currentDate])
+  }, [props.user.currentDate])
 
   async function fetchServings() {
     props.user.id !== "" && dispatch(getServingsAsync(props.user))
@@ -313,45 +313,7 @@ function Home(props) {
 
 
       </Center>
-
-      <HStack bg="gray.50" alignItems="center" safeAreaBottom shadow={6}>
-        <Pressable
-          opacity={1}
-          py="3"
-          flex={1}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <MaterialCommunityIcons
-                  name={'home'}
-                />
-              }
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-
-        <Pressable
-          opacity={0.5}
-          py="2"
-          flex={1}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={<MaterialCommunityIcons
-                name={'account-outline'}
-              />}
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-      </HStack>
+     
 
     </NativeBaseProvider>
   );
