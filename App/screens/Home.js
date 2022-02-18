@@ -31,7 +31,6 @@ function mapStateToProps(state) {
 function Home(props) {
   const dispatch = useDispatch()
   const navigation = useNavigation();
-  const { isOpen, onToggle } = useDisclose()
   const [userIcon, setUserIcon] = useState(
     <Icon
       as={MaterialCommunityIcons}
@@ -45,14 +44,16 @@ function Home(props) {
   )
   const [blueColor, setBlueColor] = useState("blue.50");
 
-  // useEffect(() => {
-  //   fetchUser()
-  // }, [props.user.username])
+  useEffect(() => {
+    fetchUser()
+  }, [])
 
-  // async function fetchUser() {
-  //   console.log('useEffect - fetchUser - props.user', props.user)
-  //   props.user.username !== "" && dispatch(getUserAsync(props.user))
-  // }
+  async function fetchUser() {
+    console.log('useEffect - fetchUser - props.route.params', props.route.params)
+    const { username } = props.route.params
+    const today = moment(new Date(), 'YYYY-MM-DD').format('YYYY-MM-DD')
+    dispatch(getUserAsync({...props.user, "username": username, "currentDate": today, "isToday": true}))  
+  }
 
   useEffect(() => {
     fetchServings()
@@ -64,7 +65,7 @@ function Home(props) {
 
   useEffect(() => {
     chooseIcon()
-  }, [props.user.servings, isOpen])
+  }, [props.user.servings])
 
   function chooseIcon() {
     let level = 0

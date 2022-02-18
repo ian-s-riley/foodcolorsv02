@@ -13,6 +13,8 @@ import {
   Pressable,
   VStack,
   Avatar,
+  Center,
+  NativeBaseProvider
 } from 'native-base';
 
 function Ingredients(props) {
@@ -51,7 +53,19 @@ function Ingredients(props) {
   }
 
   return (
-    <Box w="98%" minHeight={400}>
+<NativeBaseProvider>
+      <Center flex={1} p="2" w="100%" bgColor="gray.100">
+
+        <Box
+          borderColor="gray.200"
+          borderWidth="2"
+          width="98%"
+          rounded="xl"
+          flex={1}
+          alignItems="center"
+          bgColor="white"
+          overflow="hidden">
+
       {ingredientRows && ingredientRows.map((row, key1) => {
         return (
           <VStack key={key1} space="3" p="2">
@@ -78,7 +92,8 @@ function Ingredients(props) {
       })
       }
     </Box>
-
+    </Center>
+</NativeBaseProvider>
   );
 }
 

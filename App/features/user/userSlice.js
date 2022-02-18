@@ -37,6 +37,10 @@ export const userSlice = createSlice({
         servings: [],
     },
     reducers: {
+        updateUserName: (state, action) => {
+            //console.log('userSlice.js - updateUser - action.payload', action.payload)
+            state.username = action.payload.username
+        },
         updateStatus: (state, action) => {
             //console.log('userSlice.js - updateUser - action.payload', action.payload)
             state.status = action.payload.status
@@ -77,7 +81,7 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateStatus, updateUser, updateCurrentDate, updateServings, updateColors } = userSlice.actions
+export const { updateStatus, updateUser, updateCurrentDate, updateServings, updateColors, updateUserName } = userSlice.actions
 
 export const getUserAsync = user => dispatch => {
     //console.log('getUserAsync - user', user)
@@ -91,7 +95,7 @@ export const getUserAsync = user => dispatch => {
                 //update the user info
                 let thisUser = response.data.listUsers.items[0]
                 console.log('getUserAsync - thisUser', thisUser)
-                thisUser && dispatch(updateUser({ ...user, id: thisUser.id, "username": thisUser.username, "password": thisUser.password, "status": thisUser.status, "phoneNumber": thisUser.phoneNumber, "email": thisUser.email, "name": thisUser.name, "icon": thisUser.icon, "diet": thisUser.diet }))                
+                thisUser && dispatch(updateUser({ ...user, id: thisUser.id, "username": thisUser.username, "password": thisUser.password, "status": thisUser.status, "phoneNumber": thisUser.phoneNumber, "email": thisUser.email, "name": thisUser.name, "icon": thisUser.icon, "diet": thisUser.diet, "currentDate": user.currentDate, "isToday": user.isToday }))                
             },
             error => console.log('Load User Error', error)
         )
@@ -135,7 +139,7 @@ export const addServingAsync = user => dispatch => {
 };
 
 export const addUserAsync = user => dispatch => {
-    //save the serving to the DB for this user
+    //create a new user in the db store
     API.graphql(graphqlOperation(createUserMutation, { input: user.newUser }))
     dispatch(updateUser(user.newUser))
 };

@@ -50,7 +50,7 @@ function Joke() {
 
   return (
     <NativeBaseProvider>
-      <Center flex={1} p="2" w="100%" bgColor="gray.50" safeArea>
+      <Center flex={1} p="2" w="100%" bgColor="gray.100">
 
         <Box
           borderColor="gray.200"
@@ -74,6 +74,7 @@ function Joke() {
             >
               <Center mt="3" mb="4">
                 <Heading>LOL</Heading>
+
                 <Text mt="2" fontSize="lg">
                   {joke}
                 </Text>
@@ -99,47 +100,6 @@ function Joke() {
           )}
         </Box>
       </Center>
-      <HStack bg="gray.50" alignItems="center" safeAreaBottom shadow={6}>
-        <Pressable
-          opacity={.5}
-          py="3"
-          flex={1}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <MaterialCommunityIcons
-                  name={'home-outline'}
-                />
-              }
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-        <Pressable
-          opacity={0.5}
-          py="2"
-          flex={1}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={<MaterialCommunityIcons
-                name={'account'}
-              />}
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-      </HStack>
-
-
-
     </NativeBaseProvider>
 
   );

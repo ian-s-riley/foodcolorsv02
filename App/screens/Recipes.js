@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 import {
+  Center,
   Box,
   Icon,
   Text,
@@ -11,6 +12,8 @@ import {
   VStack,
   Spacer,
   Avatar,
+  ScrollView,
+  NativeBaseProvider
 } from 'native-base';
 
 function Recipes(props) {
@@ -49,17 +52,29 @@ function Recipes(props) {
   }, [props.currentIngredient])
 
   return (
-    <Box w="100%">
+    
+    <NativeBaseProvider>
+      <Center flex={1} p="2" w="100%" bgColor="gray.100">
+
+        <Box
+          borderColor="gray.200"
+          borderWidth="2"
+          width="98%"
+          rounded="xl"
+          flex={1}
+          alignItems="center"
+          bgColor="white"
+          overflow="hidden">
       <FlatList
         data={menuItems}
         minHeight={400}
-        mb={10}
         renderItem={({ item }) => (
           <Link href={item.sourceUrl} isExternal>
             <Box
               borderBottomWidth="1"
               borderColor="coolGray.200"
-              py="2"
+              p="2"
+              mr={3}
             >
               <HStack space={3}>
                 <Avatar
@@ -68,7 +83,7 @@ function Recipes(props) {
                     uri: item.image,
                   }}
                 />
-                <VStack>
+                <VStack overflow="hidden">
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -78,6 +93,7 @@ function Recipes(props) {
                     {item.title}
                   </Text>
                   <Text
+                    mr={3}
                     color="coolGray.600"
                     _dark={{
                       color: "warmGray.200",
@@ -90,9 +106,11 @@ function Recipes(props) {
             </Box>
           </Link>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.title}
       />
     </Box>
+    </Center>
+    </NativeBaseProvider>
   );
 }
 

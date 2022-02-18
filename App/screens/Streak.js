@@ -106,7 +106,7 @@ function Streak(props) {
   function colorBox(color, count) {
     return (
     [...Array(count)].map((e, i) => {
-      return (<Box key={i} h="5" w="5" bg={color + ".400"} borderBottomColor={color + ".300"} borderBottomWidth={1} />)
+      return (<Box key={i} h="5" w="5" bg={color + ".400"} borderRadius="full" />)
     })
     )
   }
@@ -114,14 +114,14 @@ function Streak(props) {
   function blueBox(color, count) {
     return (
     [...Array(count)].map((e, i) => {
-      return (<Box key={i} h="3" w="5" bg={color + ".400"} borderBottomColor={color + ".300"} borderBottomWidth={1} />)
+      return (<Box key={i} h="5" w="5" bg={color + ".400"} borderRadius="full" />)
     })
     )
   }
 
   return (
     <NativeBaseProvider>
-      <Center flex={1} p="2" w="100%" bgColor="white" safeArea>
+      <Center flex={1} p="2" w="100%" bgColor="gray.100">
 
         <Box
           borderColor="gray.200"
@@ -243,46 +243,6 @@ function Streak(props) {
           )}
         </Box>
       </Center>
-
-      <HStack bg="gray.50" alignItems="center" safeAreaBottom shadow={6}>
-        <Pressable
-          opacity={.5}
-          py="3"
-          flex={1}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <MaterialCommunityIcons
-                  name={'home-outline'}
-                />
-              }
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-        <Pressable
-          opacity={0.5}
-          py="2"
-          flex={1}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={<MaterialCommunityIcons
-                name={'account'}
-              />}
-              color="gray.400"
-              size="sm"
-            />
-          </Center>
-        </Pressable>
-      </HStack>
-
 
     </NativeBaseProvider>
 

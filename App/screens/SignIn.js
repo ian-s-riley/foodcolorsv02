@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Auth } from 'aws-amplify';
 
-import { useDispatch, connect } from 'react-redux'
-import { addUserAsync, updateUserAsync } from '../features/user/userSlice'
+//import MaskInput from 'react-native-mask-input';
+import { StyleSheet } from "react-native";
+import { MaskedTextInput } from "react-native-mask-text";
 
 //AWS Amplify GraphQL libraries
 import { API, graphqlOperation } from 'aws-amplify';
 import {
   listUsers,
 } from '../graphql/queries'
+import {
+  createUser as createUserMutation,
+} from '../graphql/mutations';
 
 import uuid from 'react-native-uuid';
 import {
@@ -30,15 +34,8 @@ import {
 } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-function mapStateToProps(state) {
-  //console.log('ProfileAuth.js - mapStateToProps - user', state.user)
-  return {
-    user: state.user,
-  }
-}
-
-function ProfileAuth(props) {
-  const dispatch = useDispatch()
+function SignIn() {
+  //const dispatch = useDispatch()
 
   const { isOpen, onToggle } = useDisclose(true)
   const [isLoading, setIsLoading] = useState(false);
@@ -137,7 +134,8 @@ function ProfileAuth(props) {
           icon: "",
           diet: "",
         }
-        dispatch(addUserAsync({ ...props.user, "newUser": newUser }))
+        //dispatch(addUserAsync({ ...props.user, "newUser": newUser }))
+        API.graphql(graphqlOperation(createUserMutation, { input: newUser }))
 
         setIsLoading(false)
         setShowSignup(false)
@@ -213,7 +211,7 @@ function ProfileAuth(props) {
         setErrorMsg('Whoops: ' + error.message)
       }
     }
-  }  
+  }
 
   async function lookupPasswordAndSignin(phoneNumber) {
     //look up the password for AWS signin
@@ -415,32 +413,38 @@ function ProfileAuth(props) {
           </Modal.Header>
           <Modal.Body>
             <VStack space={4} width="100%" alignItems="center">
-                <Text color="gray.500" width="90%">
+              <Text color="gray.500" width="90%">
                 {showSignin && "Hello, please sign in with your phone number."}
-            {showSignup && "Welcome, please sign up with your area code & phone number."}
-            {showNewCode && "Please enter your phone number to get a new code."}
-            {(showVerify || showNewCodeVerify) && "Please enter the 6 digit code you received."}
-                </Text>
+                {showSignup && "Welcome, please sign up with your area code & phone number."}
+                {showNewCode && "Please enter your phone number to get a new code."}
+                {(showVerify || showNewCodeVerify) && "Please enter the 6 digit code you received."}
+              </Text>
               <FormControl width="90%">
-              <Input
-                      size="xl"
-                      fontSize="3xl"
-                      maxLength={10}
-                      onChangeText={text => setPhone(text)}
-                    />
+                <MaskedTextInput
+                  mask="(999) 999-9999"
+                  onChangeText={(text, rawText) => {
+                    setPhone(rawText);
+                  }}
+                  style={styles.input}
+                  keyboardType="numeric"
+                  maxLength={14}
+                />
               </FormControl>
               {(showVerify || showNewCodeVerify) && (
-                  <FormControl width="90%">
-                    <Input
-                      size="xl"
-                      fontSize="3xl"
-                      maxLength={6}
-                      onChangeText={text => setCode(text)}
-                    />
-                  </FormControl>
+                <FormControl width="90%">
+                <MaskedTextInput
+                  mask="999999"
+                  onChangeText={(text, rawText) => {
+                    setCode(rawText);
+                  }}
+                  style={styles.input}
+                  keyboardType="numeric"
+                  maxLength={6}
+                />
+                </FormControl>
               )}
               {errorMsg.length > 0 && (
-                  <Text textAlign="center" width="90%" color="rose.400">{errorMsg}</Text>
+                <Text textAlign="center" width="90%" color="rose.400">{errorMsg}</Text>
               )}
             </VStack>
           </Modal.Body>
@@ -474,4 +478,14 @@ function ProfileAuth(props) {
   );
 }
 
-export default connect(mapStateToProps)(ProfileAuth)
+export default SignIn
+
+const styles = StyleSheet.create({
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#C0C0C0',
+    fontSize: 25,
+  },
+});

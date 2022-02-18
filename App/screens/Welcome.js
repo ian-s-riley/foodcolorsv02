@@ -38,9 +38,7 @@ export default function Welcome({ navigation }) {
         >
 <AspectRatio w="100%" ratio={16 / 9}>
             <Image
-              source={{
-                uri: "https://source.unsplash.com/200x300/?vegetables",
-              }}
+              source= {require('../assets/GreenVegetables.png')}
               alt="image"
             />
           </AspectRatio>

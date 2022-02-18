@@ -17,6 +17,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-aria/ssr": "^3.1.0",
     "@react-native-async-storage/async-storage": "^1.15.15",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "6.0.0",
@@ -38,6 +39,8 @@
     "react-input-mask": "^2.0.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-mask-input": "^1.1.1",
+    "react-native-mask-text": "^0.7.0",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",

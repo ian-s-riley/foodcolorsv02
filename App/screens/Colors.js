@@ -29,7 +29,7 @@ import Recipes from './Recipes';
 //const fallBackImg = require('../src/assets/GreenVegetables.png');
 
 function mapStateToProps(state) {
-  console.log('Colors.js - mapStateToProps - state.user', state.user)
+  //console.log('Colors.js - mapStateToProps - state.user', state.user)
   return {
     user: state.user,
   }
@@ -340,19 +340,15 @@ function Colors(props) {
             ) : (
               <VStack space={5}>
                 <Pressable
-                  px="5"
-                  py="5"
+                  px="3"
+                  py="3"
                   w="95%"
                   alignSelf="center"
                   rounded="xl"
                   borderWidth="1"
                   borderColor="coolGray.200"
                   bgColor={props.color + '.50'}
-                  onPress={() => {
-                    setShowInfo(!showInfo)
-                    setShowIngredients(false)
-                    setShowRecipes(false)
-                  }}
+                  onPress={() => { navigation.navigate('Info') }}
                 >
                   <HStack space="7" alignItems="center" width="100%">
                     <Text>
@@ -376,17 +372,15 @@ function Colors(props) {
                 </Pressable>
 
                 <Pressable
-                  px="5"
-                  py="5"
+                  px="3"
+                  py="3"
                   w="95%"
                   alignSelf="center"
                   rounded="xl"
                   borderWidth="1"
                   borderColor="coolGray.200"
                   bgColor={props.color + '.50'}
-                  onPress={() => {
-                    setShowIngredients(true)
-                  }}
+                  onPress={() => { navigation.navigate('Ingredients') }}
                 >
                   <HStack space="7">
                     <Text>
@@ -405,19 +399,15 @@ function Colors(props) {
                   </HStack>
                 </Pressable>
                 <Pressable
-                  px="5"
-                  py="5"
+                  px="3"
+                  py="3"
                   w="95%"
                   alignSelf="center"
                   rounded="xl"
                   borderWidth="1"
                   borderColor="coolGray.200"
                   bgColor={props.color + '.50'}
-                  onPress={() => {
-                    setShowInfo(false)
-                    setShowRecipes(!showRecipes)
-                    setShowIngredients(false)
-                  }}
+                  onPress={() => { navigation.navigate('Recipes') }}
                 >
                   <HStack space="7" alignItems="center" width="100%">
                     <Text>
@@ -446,7 +436,7 @@ function Colors(props) {
         </Box>
       </Center>      
 
-      <Modal isOpen={showInfo} onClose={() => setShowInfo(false)}>
+      <Modal isOpen={showInfo} onClose={() => setShowInfo(false)} size={'xl'}>
         <Modal.Content>
           <Modal.CloseButton />
           <Modal.Header><Text bold color={props.color + ".500"}>Eat {Capitalize(props.color)} Because...</Text></Modal.Header>
@@ -456,7 +446,7 @@ function Colors(props) {
         </Modal.Content>
       </Modal>
 
-      <Modal isOpen={showIngredients} onClose={() => setShowIngredients(false)}>
+      <Modal isOpen={showIngredients} onClose={() => setShowIngredients(false)} size={'xl'}>
         <Modal.Content>
           <Modal.CloseButton />
           <Modal.Header><Text bold color={props.color + ".500"}>{Capitalize(props.color)} Fruits & Vegetables</Text></Modal.Header>
@@ -466,7 +456,7 @@ function Colors(props) {
         </Modal.Content>
       </Modal>
 
-      <Modal isOpen={showRecipes} onClose={() => setShowRecipes(false)}>
+      <Modal isOpen={showRecipes} onClose={() => setShowRecipes(false)} size={'xl'}>
         <Modal.Content>
           <Modal.CloseButton />
           <Modal.Header><Text bold color={props.color + ".500"}>

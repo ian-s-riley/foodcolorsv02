@@ -44,7 +44,7 @@ function Profile(props) {
   async function signOut() {
     try {
       await Auth.signOut();
-      navigation.navigate("Home")
+      //navigation.navigate("Home")
     } catch (error) {
       //console.log('Error signing out: ', error);
     }
@@ -56,14 +56,25 @@ function Profile(props) {
 
   return (
     <NativeBaseProvider>
-      <Center flex={1} bgColor="white">
+    <Center flex={1} p="2" w="100%" bgColor="gray.100">
+
+<Box
+  borderColor="gray.200"
+  borderWidth="2"
+  width="98%"
+  rounded="xl"
+  flex={1}
+  alignItems="center"
+  bgColor="white">
+
         <IconButton
           variant="solid"
           borderRadius="full"
-          width="140px"
-          height="140px"
+          width="120px"
+          height="120px"
           onPress={onToggle}
           bg="cyan.400"
+          mt="5"
           mb="4"
           icon={
             <Icon
@@ -130,7 +141,7 @@ function Profile(props) {
                 />
               }
             />
-            <Text fontSize={15} color="gray.400">Streaks</Text>
+            <Text fontSize={15} color="gray.400">Streak</Text>
             <IconButton
               mt="4"
               variant="solid"
@@ -192,7 +203,8 @@ function Profile(props) {
             <Text fontSize={15} color="gray.400">Sign Out</Text>
           </Stagger>
         </Box>
-      </Center>      
+      </Box>      
+      </Center>
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
