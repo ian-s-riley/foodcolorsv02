@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import axios from "axios";
 
 import {
@@ -16,19 +17,25 @@ import {
   NativeBaseProvider
 } from 'native-base';
 
+function mapStateToProps(state) {
+  //console.log('Colors.js - mapStateToProps - state.user', state.user)
+  return {
+    user: state.user,
+  }
+}
+
 function Recipes(props) {
   const [menuItems, setMenuItems] = useState()
+  let recipeQuery = props.user.currentIngredient === "" ? props.color + ' fruit or vegetables' : props.user.currentIngredient
 
   useEffect(() => {
-    console.log('Recipes.js - props.currentIngredient', props.currentIngredient)
-
     //get some recipes
     var options = {
       method: 'GET',
       url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
       params: {
-        query: props.color,
-        includeIngredients: props.currentIngredient,
+        query: recipeQuery,
+        includeIngredients: '',
         diet: props.currentIngredient === "" ? "vegetarian" : props.diet,
         offset: '0',
         number: '10',
@@ -114,4 +121,4 @@ function Recipes(props) {
   );
 }
 
-export default Recipes
+export default connect(mapStateToProps)(Recipes)

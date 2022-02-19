@@ -28,6 +28,7 @@ export const userSlice = createSlice({
         currentDate: "",
         isToday: false,
         currentIngredient: "",
+        currentColor: "",
         green: 0,
         yellow: 0,
         orange: 0,
@@ -77,11 +78,23 @@ export const userSlice = createSlice({
         updateCurrentIngredient: (state, action) => {
             state.currentIngredient = action.payload.currentIngredient
         },
+        updateCurrentColor: (state, action) => {
+            state.currentColor = action.payload.currentColor
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateStatus, updateUser, updateCurrentDate, updateServings, updateColors, updateUserName } = userSlice.actions
+export const { 
+    updateStatus, 
+    updateUser, 
+    updateCurrentDate, 
+    updateServings, 
+    updateColors, 
+    updateUserName, 
+    updateCurrentIngredient,
+    updateCurrentColor,
+} = userSlice.actions
 
 export const getUserAsync = user => dispatch => {
     //console.log('getUserAsync - user', user)

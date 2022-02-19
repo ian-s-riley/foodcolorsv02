@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
 import { useDispatch, connect } from 'react-redux'
-import { addServingAsync, deleteServingAsync, updateColors, updateServings } from '../features/user/userSlice'
+import { addServingAsync, deleteServingAsync, updateColors, updateCurrentColor, updateServings } from '../features/user/userSlice'
 
 import {
   Box,
@@ -29,7 +29,6 @@ import Recipes from './Recipes';
 //const fallBackImg = require('../src/assets/GreenVegetables.png');
 
 function mapStateToProps(state) {
-  //console.log('Colors.js - mapStateToProps - state.user', state.user)
   return {
     user: state.user,
   }
@@ -62,6 +61,7 @@ function Colors(props) {
 
   useEffect(() => {
     chooseIcon()
+    dispatch(updateCurrentColor({ ...props.user, "currentColor": props.color }))
   }, [props.user.servings])
 
   function chooseIcon() {
@@ -335,11 +335,12 @@ function Colors(props) {
                 </VStack>
               </HStack>
             </Box>
+            
             {props.color === 'blue' ? (
               <Info color="blue" />
             ) : (
               <VStack space={5}>
-                <Pressable
+              <Pressable
                   px="3"
                   py="3"
                   w="95%"
@@ -348,39 +349,7 @@ function Colors(props) {
                   borderWidth="1"
                   borderColor="coolGray.200"
                   bgColor={props.color + '.50'}
-                  onPress={() => { navigation.navigate('Info') }}
-                >
-                  <HStack space="7" alignItems="center" width="100%">
-                    <Text>
-                      {currentIngredient === "" ? (
-                        "Eat " + Capitalize(props.color) + " Food Because..."
-                      ) : (
-                        "Eat " + Capitalize(currentIngredient) + " Because..."
-                      )}
-                    </Text>
-                    <Spacer />
-                    <Icon
-                      as={
-                        <MaterialCommunityIcons
-                          name={showRecipes ? ('chevron-down') : ('chevron-right')}
-                        />
-                      }
-                      color="gray.400"
-                      size="sm"
-                    />
-                  </HStack>
-                </Pressable>
-
-                <Pressable
-                  px="3"
-                  py="3"
-                  w="95%"
-                  alignSelf="center"
-                  rounded="xl"
-                  borderWidth="1"
-                  borderColor="coolGray.200"
-                  bgColor={props.color + '.50'}
-                  onPress={() => { navigation.navigate('Ingredients') }}
+                  onPress={() => { navigation.navigate(props.color + 'ingredients') }}
                 >
                   <HStack space="7">
                     <Text>
@@ -398,6 +367,7 @@ function Colors(props) {
                     />
                   </HStack>
                 </Pressable>
+
                 <Pressable
                   px="3"
                   py="3"
@@ -407,14 +377,46 @@ function Colors(props) {
                   borderWidth="1"
                   borderColor="coolGray.200"
                   bgColor={props.color + '.50'}
-                  onPress={() => { navigation.navigate('Recipes') }}
+                  onPress={() => { navigation.navigate(props.color + 'info') }}
                 >
                   <HStack space="7" alignItems="center" width="100%">
                     <Text>
                       {currentIngredient === "" ? (
-                        "Recipes with " + Capitalize(props.color) + " Food"
+                        "Eat " + Capitalize(props.color) + " Fruit & Veggies Because..."
                       ) : (
-                        "Recipes with " + Capitalize(currentIngredient)
+                        "Eat " + Capitalize(currentIngredient) + " Because..."
+                      )}
+                    </Text>
+                    <Spacer />
+                    <Icon
+                      as={
+                        <MaterialCommunityIcons
+                          name={showRecipes ? ('chevron-down') : ('chevron-right')}
+                        />
+                      }
+                      color="gray.400"
+                      size="sm"
+                    />
+                  </HStack>
+                </Pressable>
+                
+                <Pressable
+                  px="3"
+                  py="3"
+                  w="95%"
+                  alignSelf="center"
+                  rounded="xl"
+                  borderWidth="1"
+                  borderColor="coolGray.200"
+                  bgColor={props.color + '.50'}
+                  onPress={() => { navigation.navigate(props.color + 'recipes') }}
+                >
+                  <HStack space="7" alignItems="center" width="100%">
+                    <Text>
+                      {props.user.currentIngredient === "" ? (
+                        "Recipes with " + Capitalize(props.color) + " Fruit & Veggies"
+                      ) : (
+                        "Recipes with " + Capitalize(props.user.currentIngredient)
                       )}
                     </Text>
                     <Spacer />
@@ -434,51 +436,7 @@ function Colors(props) {
 
           </VStack>
         </Box>
-      </Center>      
-
-      <Modal isOpen={showInfo} onClose={() => setShowInfo(false)} size={'xl'}>
-        <Modal.Content>
-          <Modal.CloseButton />
-          <Modal.Header><Text bold color={props.color + ".500"}>Eat {Capitalize(props.color)} Because...</Text></Modal.Header>
-          <Modal.Footer>
-            <Info color={props.color} currentIngredient={currentIngredient} />
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
-
-      <Modal isOpen={showIngredients} onClose={() => setShowIngredients(false)} size={'xl'}>
-        <Modal.Content>
-          <Modal.CloseButton />
-          <Modal.Header><Text bold color={props.color + ".500"}>{Capitalize(props.color)} Fruits & Vegetables</Text></Modal.Header>
-          <Modal.Body>
-            <Ingredients color={props.color} handleSetIngredient={(item) => handleSetIngredient(item)} />
-          </Modal.Body>
-        </Modal.Content>
-      </Modal>
-
-      <Modal isOpen={showRecipes} onClose={() => setShowRecipes(false)} size={'xl'}>
-        <Modal.Content>
-          <Modal.CloseButton />
-          <Modal.Header><Text bold color={props.color + ".500"}>
-            {currentIngredient === "" ? (
-              "Recipes with " + Capitalize(props.color) + " Food"
-            ) : (
-              "Recipes with " + Capitalize(currentIngredient)
-            )}
-          </Text>
-          </Modal.Header>
-          <Modal.Footer>
-            <Recipes
-              color={props.color}
-              currentIngredient={currentIngredient}
-              diet={props.user.diet} />
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
-
-
-
-
+      </Center>            
     </NativeBaseProvider>
 
   );

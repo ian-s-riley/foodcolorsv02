@@ -54,10 +54,6 @@ const AuthTabsScreen = () => (
   </AuthTabs.Navigator>
 );
 
-
-
-
-
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
   const dispatch = useDispatch()
@@ -95,22 +91,6 @@ const RootStackScreen = () => {
       })
   }, []);
 
-  //function checkUser() {
-  // try {
-  //   const thisUser = await Auth.currentAuthenticatedUser()
-  //   //console.log('thisUser', thisUser.username) 
-  //     if (thisUser) {
-  //       setIsLoading(!isLoading);
-  //       setUser(thisUser.username)
-  //       dispatch(updateUser(thisUser.username))
-  //     }     
-  // } catch (err) {
-  //   //console.log(' User is not signed in', err)
-  //     setIsLoading(!isLoading);
-  //     setUser()
-  // }
-  //}
-
   const AppStack = createStackNavigator();
   const AppStackScreen = () => (
     <AppStack.Navigator
@@ -121,15 +101,18 @@ const RootStackScreen = () => {
         options={{ headerTitle: 'Home', headerShown: true }}
         initialParams={{ username: user }}
       />
-      <AppStack.Screen name="Red" options={{ headerTitle: 'Red Servings' }}>{props => (<Colors {...props} color={"red"} />)}</AppStack.Screen>
+      <AppStack.Screen name="red" options={{ headerTitle: 'Red' }}>{props => (<Colors {...props} color={"red"} />)}</AppStack.Screen>
+      <AppStack.Screen name="redingredients" options={{ headerTitle: 'Red Fruits & Veggies' }}>{props => (<Ingredients {...props} color={"red"} />)}</AppStack.Screen>
+      <AppStack.Screen name="redrecipes" options={{ headerTitle: 'Red Recipes' }}>{props => (<Recipes {...props} />)}</AppStack.Screen>      
+      <AppStack.Screen name="redinfo" options={{ headerTitle: 'Red Food is Good' }}>{props => (<Info {...props} />)}</AppStack.Screen>
+      <AppStack.Screen name="Ingredients" options={{ headerTitle: 'Orange Fruits & Veggies' }}>{props => (<Ingredients {...props} />)}</AppStack.Screen>
       <AppStack.Screen name="Orange" options={{ headerTitle: 'Orange' }}>{props => (<Colors {...props} color={"orange"} />)}</AppStack.Screen>
-      <AppStack.Screen name="Yellow" options={{ headerTitle: 'Orange' }}>{props => (<Colors {...props} color={"yellow"} />)}</AppStack.Screen>
-      <AppStack.Screen name="Green" options={{ headerTitle: 'Orange' }}>{props => (<Colors {...props} color={"green"} />)}</AppStack.Screen>
-      <AppStack.Screen name="Purple" options={{ headerTitle: 'Orange' }}>{props => (<Colors {...props} color={"purple"} />)}</AppStack.Screen>
+      <AppStack.Screen name="Yellow" options={{ headerTitle: 'Yellow' }}>{props => (<Colors {...props} color={"yellow"} />)}</AppStack.Screen>
+      <AppStack.Screen name="Green" options={{ headerTitle: 'Green' }}>{props => (<Colors {...props} color={"green"} />)}</AppStack.Screen>
+      <AppStack.Screen name="Purple" options={{ headerTitle: 'Purple/Blue' }}>{props => (<Colors {...props} color={"purple"} />)}</AppStack.Screen>
       <AppStack.Screen name="Blue" options={{ headerTitle: 'Water' }}>{props => (<Colors {...props} color={"blue"} />)}</AppStack.Screen>
-      <AppStack.Screen name="Recipes" options={{ headerTitle: 'Orange' }}>{props => (<Recipes {...props} />)}</AppStack.Screen>
-      <AppStack.Screen name="Ingredients" options={{ headerTitle: 'Orange' }}>{props => (<Ingredients {...props} />)}</AppStack.Screen>
-      <AppStack.Screen name="Info" options={{ headerTitle: 'Orange' }}>{props => (<Info {...props} />)}</AppStack.Screen>
+      <AppStack.Screen name="Recipes" options={{ headerTitle: 'Orange Recipes' }}>{props => (<Recipes {...props} />)}</AppStack.Screen>      
+      <AppStack.Screen name="Info" options={{ headerTitle: 'Orange Food is Good' }}>{props => (<Info {...props} />)}</AppStack.Screen>
     </AppStack.Navigator>
   );
 

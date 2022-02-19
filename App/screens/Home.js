@@ -22,7 +22,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function mapStateToProps(state) {
-  console.log('Home.js - mapStateToProps - state.user', state.user)
+  //console.log('Home.js - mapStateToProps - state.user', state.user)
   return {
     user: state.user,
   }
@@ -31,6 +31,7 @@ function mapStateToProps(state) {
 function Home(props) {
   const dispatch = useDispatch()
   const navigation = useNavigation();
+  
   const [userIcon, setUserIcon] = useState(
     <Icon
       as={MaterialCommunityIcons}
@@ -49,7 +50,7 @@ function Home(props) {
   }, [])
 
   async function fetchUser() {
-    console.log('useEffect - fetchUser - props.route.params', props.route.params)
+    //console.log('useEffect - fetchUser - props.route.params', props.route.params)
     const { username } = props.route.params
     const today = moment(new Date(), 'YYYY-MM-DD').format('YYYY-MM-DD')
     dispatch(getUserAsync({...props.user, "username": username, "currentDate": today, "isToday": true}))  
@@ -191,7 +192,7 @@ function Home(props) {
       colorScheme={color}
       width="75px"
       height="75px"
-      onPress={() => navigation.navigate(Capitalize(color))}
+      onPress={() => navigation.navigate(color)}
       _text={{
         fontSize: "25",
         fontWeight: "bold",

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import { useDispatch, connect } from 'react-redux'
+import { updateCurrentIngredient } from '../features/user/userSlice'
+
 //AWS Amplify GraphQL libraries
 import { API, graphqlOperation } from 'aws-amplify';
 import {
@@ -17,7 +20,15 @@ import {
   NativeBaseProvider
 } from 'native-base';
 
+function mapStateToProps(state) {
+  //console.log('Home.js - mapStateToProps - state.user', state.user)
+  return {
+    user: state.user,
+  }
+}
+
 function Ingredients(props) {
+  const dispatch = useDispatch()
   const [ingredientRows, setIngredientRows] = useState()
 
   useEffect(() => {
@@ -25,6 +36,7 @@ function Ingredients(props) {
   }, [])
 
   async function fetchIngredients() {
+    //console.log('Ingredients.js - props.color', props.color)
     API.graphql(
       graphqlOperation(listIngredients, {
         filter: {
@@ -38,7 +50,7 @@ function Ingredients(props) {
           let row = []
           myIngredients.map((ingredient, key) => {
             //console.log('ingredient', ingredient.name + (key % 3))
-            row.push({ "name": ingredient.name, "type": ingredient.type })
+            row.push({ "name": ingredient.name, "type": ingredient.type, "imageUri": ingredient.imageUri })
             if (key % 2 === 1) {
               allIngredients.push({ "ingredients": row })
               row = []
@@ -52,8 +64,13 @@ function Ingredients(props) {
       )
   }
 
+  function handleSetIngredient(item) {
+    const thisIngredient = props.user.currentIngredient === item ? "" : item
+    dispatch(updateCurrentIngredient({ ...props.user, "currentIngredient": thisIngredient }))
+  }
+
   return (
-<NativeBaseProvider>
+    <NativeBaseProvider>
       <Center flex={1} p="2" w="100%" bgColor="gray.100">
 
         <Box
@@ -66,35 +83,36 @@ function Ingredients(props) {
           bgColor="white"
           overflow="hidden">
 
-      {ingredientRows && ingredientRows.map((row, key1) => {
-        return (
-          <VStack key={key1} space="3" p="2">
-            <HStack space="5">
-              {row.ingredients.map((ingredient, key2) => {
-                let imageUri = 'https://source.unsplash.com/random/80x80/?' + ingredient.name.replace(' ', '+') + '+' + ingredient.type
-                //imageUri.replace(' ', '+')
-                return (
-                  <Pressable key={key2} onPress={() => props.handleSetIngredient(ingredient.name)} alignItems="center" flex={1}>
-                    <Avatar
-                      size="80px"
-                      source={{
-                        uri: imageUri,
-                      }}
-                    />
-                    <Text>{ingredient.name}</Text>
-                  </Pressable>
-                )
-              }
-              )}
-            </HStack>
-          </VStack>
-        )
-      })
-      }
-    </Box>
-    </Center>
-</NativeBaseProvider>
+          {ingredientRows && ingredientRows.map((row, key1) => {
+            return (
+              <VStack key={key1} space="3" p="2">
+                <HStack space="5">
+                  {row.ingredients.map((ingredient, key2) => {
+                    //let imageUri = 'https://source.unsplash.com/random/80x80/?' + ingredient.name.replace(' ', '+') + '+' + ingredient.type
+                    //imageUri.replace(' ', '+')   
+                    console.log('ingredient.imageUri', ingredient.imageUri)                 
+                    return (
+                      <Pressable key={key2} onPress={() => handleSetIngredient(ingredient.name)} alignItems="center" flex={1}>
+                        <Avatar
+                          size="80px"
+                          borderWidth={props.user.currentIngredient === ingredient.name ? 4 : 0}
+                          borderColor={props.color + '.400'}
+                          source={require('../assets/' + ingredient.imageUri)}
+                        />
+                        <Text>{ingredient.name}</Text>
+                      </Pressable>
+                    )
+                  }
+                  )}
+                </HStack>
+              </VStack>
+            )
+          })
+          }
+        </Box>
+      </Center>
+    </NativeBaseProvider>
   );
 }
 
-export default Ingredients
+export default connect(mapStateToProps)(Ingredients)
