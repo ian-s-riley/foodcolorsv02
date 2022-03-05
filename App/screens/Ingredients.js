@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { useDispatch, connect } from 'react-redux'
 import { updateCurrentIngredient } from '../features/user/userSlice'
@@ -29,6 +30,7 @@ function mapStateToProps(state) {
 
 function Ingredients(props) {
   const dispatch = useDispatch()
+  const navigation = useNavigation();
   const [ingredientRows, setIngredientRows] = useState()
 
   useEffect(() => {
@@ -67,6 +69,9 @@ function Ingredients(props) {
   function handleSetIngredient(item) {
     const thisIngredient = props.user.currentIngredient === item ? "" : item
     dispatch(updateCurrentIngredient({ ...props.user, "currentIngredient": thisIngredient }))
+    setTimeout(() => {
+      navigation.navigate(props.color)
+      }, 1000);    
   }
 
   return (

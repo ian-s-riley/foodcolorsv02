@@ -18,7 +18,7 @@ import {
 } from 'native-base';
 
 function mapStateToProps(state) {
-  console.log('Info.js - mapStateToProps - state.user', state.user)
+  //console.log('Info.js - mapStateToProps - state.user', state.user)
   return {
     user: state.user,
   }
@@ -34,7 +34,7 @@ function Info(props) {
   }, [])
 
   async function fetchReasons() {
-    console.log('info.js - item', item)
+    //console.log('info.js - item', item)
     API.graphql(
       graphqlOperation(listReasons, {
         filter: {

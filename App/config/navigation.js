@@ -101,10 +101,10 @@ const RootStackScreen = () => {
         options={{ headerTitle: 'Home', headerShown: true }}
         initialParams={{ username: user }}
       />
-      <AppStack.Screen name="red" options={{ headerTitle: 'Red' }}>{props => (<Colors {...props} color={"red"} />)}</AppStack.Screen>
+      <AppStack.Screen name="red" options={{ headerTitle: 'Red Food' }}>{props => (<Colors {...props} color={"red"} />)}</AppStack.Screen>
       <AppStack.Screen name="redingredients" options={{ headerTitle: 'Red Fruits & Veggies' }}>{props => (<Ingredients {...props} color={"red"} />)}</AppStack.Screen>
-      <AppStack.Screen name="redrecipes" options={{ headerTitle: 'Red Recipes' }}>{props => (<Recipes {...props} />)}</AppStack.Screen>      
-      <AppStack.Screen name="redinfo" options={{ headerTitle: 'Red Food is Good' }}>{props => (<Info {...props} />)}</AppStack.Screen>
+      <AppStack.Screen name="redrecipes" options={{ headerTitle: 'Red Recipes' }}>{props => (<Recipes {...props} color={"red"} />)}</AppStack.Screen>      
+      <AppStack.Screen name="redinfo" options={{ headerTitle: 'Red Food is Good' }}>{props => (<Info {...props} color={"red"} />)}</AppStack.Screen>
       <AppStack.Screen name="Ingredients" options={{ headerTitle: 'Orange Fruits & Veggies' }}>{props => (<Ingredients {...props} />)}</AppStack.Screen>
       <AppStack.Screen name="Orange" options={{ headerTitle: 'Orange' }}>{props => (<Colors {...props} color={"orange"} />)}</AppStack.Screen>
       <AppStack.Screen name="Yellow" options={{ headerTitle: 'Yellow' }}>{props => (<Colors {...props} color={"yellow"} />)}</AppStack.Screen>

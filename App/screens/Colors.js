@@ -381,10 +381,10 @@ function Colors(props) {
                 >
                   <HStack space="7" alignItems="center" width="100%">
                     <Text>
-                      {currentIngredient === "" ? (
+                    {props.user.currentIngredient === "" ? (
                         "Eat " + Capitalize(props.color) + " Fruit & Veggies Because..."
                       ) : (
-                        "Eat " + Capitalize(currentIngredient) + " Because..."
+                        "Eat " + Capitalize(props.user.currentIngredient) + " Because..."
                       )}
                     </Text>
                     <Spacer />
